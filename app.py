@@ -150,23 +150,39 @@ def event_handle(event):
     if msgType == "text":
         msg = str(event["message"]["text"])
         if (msg == "สวัสดี"): 
-             replyObj = TextSendMessage(text="ดีด้วย")
-             line_bot_api.reply_message(rtoken, replyObj)
-        elif (msg == "มีใครเป็นidol?"):
-             replyObj = TextSendMessage(text="อาจารย์แดงครับ")
-             line_bot_api.reply_message(rtoken, replyObj)
-        elif (msg == "กินข้าวยัง?"):
-             replyObj = TextSendMessage(text="ยังข่าบ")
-             line_bot_api.reply_message(rtoken, replyObj)
-        elif (msg == "หิวป่าว"):
-             replyObj = TextSendMessage(text="ไม่หิวอ่ะ")
-             line_bot_api.reply_message(rtoken, replyObj)
-        elif (msg == "ไปเที่ยวป่าว")
-             replyObj = TextSendMessage(text="ไม่ไป")
-             line_bot_api.reply_message(rtoken, replyObj)
-        else :
-            replyObj = TextSendMessage(text=msg)
+            replyObj = TextSendMessage(text="ดีด้วย")
             line_bot_api.reply_message(rtoken, replyObj)
+        elif (msg == "กินข้าวยัง?"):
+            replyObj = TextSendMessage(text="ยังข่าบ")
+            line_bot_api.reply_message(rtoken, replyObj)
+        elif (msg == "หิวป่าว"):
+            replyObj = TextSendMessage(text="ไม่หิวอ่ะ")
+            line_bot_api.reply_message(rtoken, replyObj)
+        elif (msg == "ไปเที่ยวป่าว"):
+            replyObj = TextSendMessage(text="ไม่ไป")
+            line_bot_api.reply_message(rtoken, replyObj)
+        else :
+            headers = request.headers
+            json_headers = json.dumps({k:v for k, v in headers.items()})
+            '''
+            json_line = request.get_json(force=False,cache=False)
+            json_line = json.dumps(json_line)
+            decoded = json.loads(json_line)
+            crl= pycurl.Curl()
+            crl.setopt( crl.URL, "https://bots.dialogflow.com/line/l--rubc/webhook")
+            crl.setopt( crl.POST, 1)
+            crl.setopt( crl.BINARYTRANSFER, true)
+            crl.setopt( crl.POSTFIELDS, decoded)
+            crl.setopt( crl.HTTPHEADER, json_headers)
+            crl.setopt( crl.SSL_VERIFYHOST, 2)
+            crl.setopt( crl.SSL_VERIFYPEER, 1)
+            crl.setopt( crl.FOLLOWLOCATION, 1)
+            crl.setopt( crl.RETURNTRANSFER, 1)
+            crl.perform()
+            crl.close()
+            '''
+replyObj = TextSendMessage(text=json_headers)
+line_bot_api.reply_message(rtoken, replyObj)
     elif msgType == "image":
         try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
