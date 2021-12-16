@@ -125,7 +125,6 @@ def reply(intent,text,reply_token,id,disname):
     line_bot_api.reply_message(reply_token,text_message)
 
 def event_handle(event,json_line):
-    print(event)
     try:
         userId = event['source']['userId']
     except:
@@ -168,7 +167,7 @@ def event_handle(event,json_line):
             url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/25e9d337-c228-4ed8-b5bc-3198b035e4a0"
             requests.post(url,data=json_line, headers=json_headers)
     elif msgType == "image":
-         try:
+        try:
             message_content = line_bot_api.get_message_content(event['message']['id'])
             i = Image.open(BytesIO(message_content.content))
             filename = event['message']['id'] + '.jpg'
