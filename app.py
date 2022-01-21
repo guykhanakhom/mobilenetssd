@@ -165,7 +165,7 @@ def event_handle(event,json_line):
             response = requests.get(url)
             response = response.json()
             replyObj = TextSendMessage(text=str(response))
-            line_bot_api.reply_message(rtoken, replyO)
+            line_bot_api.reply_message(rtoken, replyObj)
         else :
             headers = request.headers
             json_headers = ({k:v for k, v in headers.items()})
